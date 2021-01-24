@@ -13,7 +13,7 @@
 	},
 	"galaxy.meteor.com": {
 		"env": {
-            "MONGO_URL": "mongodb+srv://daoadmin:daoadminpassword@cluster1-etul3.mongodb.net/daodb",
+            "MONGO_URL": "mongodb+srv://daoadmin:daoadminpassword@daocluster.etul3.mongodb.net/daodb",
 			"ROOT_URL": "https://www.avanti.meteorapp.com"
 		}
 	}

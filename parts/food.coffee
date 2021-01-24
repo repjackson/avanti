@@ -13,19 +13,33 @@ if Meteor.isClient
         @layout 'layout'
         @render 'shop_view'
         ), name:'shopview'
+    Router.route '/menu_item/:doc_id/view', (->
+        @layout 'layout'
+        @render 'menu_item_view'
+        ), name:'menu_item_view'
 
     Template.food.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'shop'
+        @autorun => Meteor.subscribe 'model_docs', 'menu_item'
    
    
     Template.food.onRendered ->
 
 
-    Template.food.helpers
+    Template.shop_view.helpers
         shops: ->
             Docs.find
                 model:'shop'
-    Template.food.events
+        menu_items: ->
+            Docs.find
+                model:'menu_item'
+    Template.shop_view.events
+        'click .add_item': ->
+            new_id = 
+                Docs.insert 
+                    model:'menu_item'
+            Router.go "/menu_item/#{new_id}/edit"        
+
         'click .delete_item': ->
             if confirm 'delete item?'
                 Docs.remove @_id
@@ -35,11 +49,13 @@ if Meteor.isClient
                 Meteor.call 'send_shop', @_id, =>
                     Router.go "/shop/#{@_id}/view"
 
-    Template.shop_view.onCreated ->
+    Template.menu_item_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
    
    
     Template.shop_view.onRendered ->
+        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'model_docs', 'menu_item'
 
 
     Template.shop_view.events
@@ -104,6 +120,30 @@ if Meteor.isClient
             if confirm 'confirm?'
                 Meteor.call 'publish_shop', @_id, =>
                     Router.go "/shop/#{@_id}/view"
+
+
+
+    Router.route '/menu_item/:doc_id/edit', (->
+        @layout 'layout'
+        @render 'menu_item_edit'
+        ), name:'menu_item_edit'
+
+    Template.menu_item_edit.onCreated ->
+        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+    Template.menu_item_edit.onRendered ->
+
+
+    Template.menu_item_edit.events
+        'click .delete_item': ->
+            if confirm 'delete item?'
+                Docs.remove @_id
+
+        'click .publish': ->
+            Docs.update Router.current().params.doc_id,
+                $set:published:true
+            if confirm 'confirm?'
+                Meteor.call 'publish_menu', @_id, =>
+                    Router.go "/menu/#{@_id}/view"
 
 
     Template.shop_edit.helpers
