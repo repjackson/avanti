@@ -5,10 +5,14 @@ if Meteor.isClient
         @layout 'layout'
         @render 'food'
         ), name:'food'
-    Router.route '/shop/:doc_id/view', (->
+    Router.route '/food/:doc_id/view', (->
         @layout 'layout'
         @render 'shop_view'
         ), name:'shop_view'
+    Router.route '/food/:doc_id', (->
+        @layout 'layout'
+        @render 'shop_view'
+        ), name:'shopview'
 
     Template.food.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'shop'

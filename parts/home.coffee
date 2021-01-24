@@ -18,7 +18,8 @@ if Meteor.isClient
     Template.home.onCreated ->
         @autorun => Meteor.subscribe 'latest_debits'
         @autorun => Meteor.subscribe 'model_docs', 'finance_stat'
-        @autorun => Meteor.subscribe 'model_docs', 'expense'
+        @autorun => Meteor.subscribe 'model_docs', 'shop'
+        # @autorun => Meteor.subscribe 'model_docs', 'expense'
 
         # @autorun => Meteor.subscribe 'model_docs', 'transaction'
         @autorun => Meteor.subscribe 'model_docs', 'request'
@@ -63,6 +64,9 @@ if Meteor.isClient
             ).count()
         
     Template.home.helpers
+        shops: ->
+            Docs.find
+                model:'shop'
         featured_products: ->
             Docs.find
                 model:'product'
@@ -74,9 +78,9 @@ if Meteor.isClient
                 model:'global_stats'
         can_debit: ->
             Meteor.user().points > 0
-        stewards: ->
+        staffs: ->
             Meteor.users.find
-                levels:$in:['steward']
+                levels:$in:['staff']
         latest_debits: ->
             Docs.find {
                 model:'debit'

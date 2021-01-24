@@ -37,6 +37,10 @@ template(name='home')
                     
         .centered.row
             .sixteen.wide.center.aligned.column
+                each shops 
+                    a(href="/food/#{_id}" title="{{name}} {{points}}")
+                        img.ui.tiny.pointer.inline.circular.spaced_image.zoom.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
+                div
                 each members 
                     if profile_image_id
                         a(href="/user/#{username}" title="{{name}} {{points}}")
