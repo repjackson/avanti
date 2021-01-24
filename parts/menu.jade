@@ -1,38 +1,17 @@
-template(name='food')
-    .ui.padded.stackable.grid
-        .sixteen.wide.column
-            .ui.header 
-                +icolorlg name='food' cl='ui inline image'
-                |food
-        .sixteen.wide.column
-            .ui.cards
-                each shops
-                    +shop_card
-            .ui.header 
-                i.list.icon
-                |menu items
-            .ui.cards
-                each menu_items
-                    +menu_item_card
-
-template(name='shop_card')
-    a.card(href="/shop/#{_id}/view")
-        .image
-            img.ui.raw.image(src="{{c.url image width=400 height=300 crop='fill'}}")    
+template(name='menu_item_card')
+    a.ui.card(href="/menu_item/#{_id}/view")
+        img.ui.image(src="{{c.url image height=400 width=400 gravity='face' crop='fill'}}")
         .content
-            a.ui.header(href="/shop/#{_id}/view")
-                |#{title}
-            |!{description}
-        
+            .header #{title}
+            .header $#{price}
 
-
-template(name='shop_view')
+template(name='menu_item_view')
     with current_doc
         .ui.stackable.padded.grid
             .centered.middle.aligned.row
                 .four.wide.center.aligned.column
                     // if can_edit
-                    a(href="/m/shop" title='shops')
+                    a(href="/m/menu_item" title='menu_items')
                         +icolorlg name='food' cl='ui inline image pointer'
                 .eight.wide.center.aligned.column
                     if icon
@@ -40,11 +19,10 @@ template(name='shop_view')
                     else
                         +icolorlg name='food' cl='ui inline image'
                     .ui.center.aligned.inline.header 
-                        small viewing shop
                         |#{title}
                 .four.wide.center.aligned.column
                     if can_edit
-                        a.edit_shop(href="/shop/#{_id}/edit")
+                        a.edit_menu_item(href="/menu_item/#{_id}/edit")
                             i.big.blue.pencil.icon
             .row 
                 .four.wide.column
@@ -66,36 +44,29 @@ template(name='shop_view')
                     .spacer
                     .ui.icon.button.add_item 
                         i.plus.icon
-                    .ui.stackable.three.cards
-                        each menu_items
-                            +menu_item_card
+                    each menu_items
+                        a.ui.header(href="/menu/#{_id}/view") #{title}
                     +comments
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .four.wide.column
-                    +boolean_view key='published' direct=true
-                    +boolean_view key='grubhub' direct=true
-                    +boolean_view key='postmates' direct=true
-                    +boolean_view key='nosh' direct=true
-                    +boolean_view key='DoorDash' direct=true
+                    .ui.header $#{price}
+                    +voting_full
+                    +single_doc_view key='shop_id' ref_model='shop' label='shop' direct=true        
 
-
-
-
-
-template(name='shop_edit')
+template(name='menu_item_edit')
     with current_doc
         .ui.stackable.padded.grid
             .centered.middle.aligned.row 
                 .four.wide.center.aligned.column
-                    a.ui.green.big.icon.button(href="/shop/#{_id}/view" title='save')
+                    a.ui.green.big.icon.button(href="/menu_item/#{_id}/view" title='save')
                         i.checkmark.big.icon
                 .eight.wide.center.aligned.column
                     .ui.inline.header 
-                        +icon name='shop'
-                        small edit shop
+                        +icon name='meal'
+                        small edit menu item
                         |#{title}
                 .four.wide.center.aligned.column
-                    i.link.big.remove.icon.delete_item(title='delete shop')
+                    i.link.big.remove.icon.delete_item(title='delete menu item')
             .row 
                 .five.wide.column
                     +text_edit key='title' icon='header' direct=true
@@ -106,18 +77,9 @@ template(name='shop_edit')
                     +array_edit key='tags' label='tags' direct=true
                 .six.wide.column
                     +textarea_edit key='description' label='description' direct=true
-                    +textarea_edit key='hours' label='hours' direct=true
+                    // +textarea_edit key='goals' label='goals' direct=true
                     //- +array_edit key='location_tags' label='location_tags' direct=true
                 .five.wide.column
+                    +number_edit key='price' direct=true
                     +boolean_edit key='published' direct=true
-                    +boolean_edit key='grubhub' direct=true
-                    +boolean_edit key='postmates' direct=true
-                    +boolean_edit key='nosh' direct=true
-                    +boolean_edit key='DoorDash' direct=true
-
-
-
-
-
-
-
+                    +single_doc_edit key='shop_id' ref_model='shop' label='shop' direct=true        

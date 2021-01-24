@@ -398,7 +398,7 @@ template(name='textarea_edit')
                 //-     |#{key}
                 //- else
                 //-     |#{this}
-            textarea.edit_textarea(rows='7') #{field_value}
+            textarea.edit_textarea(rows='10') #{field_value}
 
 template(name='pdf_edit')
     .ui.form
@@ -976,7 +976,7 @@ template(name='single_doc_edit')
                 +icon name=icon cl='ui middle aligned mini image'
                 //- +i name=icon cl='ui mini inline image'
             |#{calculated_label}
-            |#{slug}
+            |#{slug} #{title}
 
 
 template(name='multi_doc_edit')
