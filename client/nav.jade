@@ -4,32 +4,35 @@ template(name='nav')
         a.icon.item.toggle_sidebar
             i.large.bars.icon
         a.item(href="/" class="{{isActivePath '/'}}")
-            img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
-            span.mobile.hidden ONE|Riverside
+            img.ui.avatar.compact.image(src="{{c.url 'avanti_logo' height=200 width=200 gravity='face' crop='fill'}}")
+            span.mobile.hidden Avanti
         a.icon.item.set_member.mobile.hidden(href="/m/member" class="{{isActivePath '/m/member'}}" title='users')
             i.large.users.icon
-        a.icon.item.mobile.hidden(href="/events" class="{{isActivePath '/events'}}" title='events')
+        a.item.mobile.hidden(href="/food" class="{{isActivePath '/food'}}" title='food')
+            i.large.food.icon
+            | food
+        a.item.mobile.hidden(href="/events" class="{{isActivePath '/events'}}" title='events')
             i.large.calendar.icon
-            // | events
+            | events
         // a.icon.item.mobile.hidden(href="/m/event" class="{{isActivePath 'events'}}" title='events')
-        a.icon.item.mobile.hidden.set_request(href="/m/request" class="{{isActivePath '/m/request'}}" title='requests')
+        a.item.mobile.hidden.set_request(href="/m/request" class="{{isActivePath '/m/request'}}" title='requests')
             i.large.concierge.bell.icon
             // em(data-emoji='bellhop')
-            // | requests
-        a.icon.item.mobile.hidden.set_offer(href="/m/offer" class="{{isActivePath '/m/offer'}}" title='offers')
+            | requests
+        a.item.mobile.hidden.set_offer(href="/m/offer" class="{{isActivePath '/m/offer'}}" title='offers')
             i.large.hand.holding.heart.icon
             // em(data-emoji='bellhop')
-            // | offers
-        a.icon.item.mobile.hidden.set_post(href="/m/post" class="{{isActivePath '/m/post'}}" title='feed')
+            | offers
+        a.item.mobile.hidden.set_post(href="/m/post" class="{{isActivePath '/m/post'}}" title='feed')
             i.large.newspaper.icon
             // em(data-emoji='newspaper')
-            // | news
-        a.icon.item.mobile.hidden.set_photo(href="/m/photo" class="{{isActivePath '/m/photo'}}" title='photos')
+            | news
+        a.item.mobile.hidden.set_photo(href="/m/photo" class="{{isActivePath '/m/photo'}}" title='photos')
             i.large.picture.icon
             // em(data-emoji='newspaper')
-            // | news
-        a.icon.item.mobile.hidden.set_expense(href="/m/expense" class="{{isActivePath '/m/expense'}}" title='expenses')
-            i.large.dollar.icon
+            | photos
+        // a.icon.item.mobile.hidden.set_expense(href="/m/expense" class="{{isActivePath '/m/expense'}}" title='expenses')
+        //     i.large.dollar.icon
         // if is_admin
         //     a.icon.item.mobile.hidden(href="/m/model" class="{{isActivePath regex='model'}}" title='admin')
         //         i.database.large.icon
@@ -101,7 +104,7 @@ template(name='recent_alert')
             
             
 template(name='right_sidebar')
-    .ui.right.sidebar.vertical.borderless.menu
+    .ui.right.sidebar.vertical.borderless.inverted.menu
         // a.item.toggle_rightbar(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
         //     img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
         //     |#{currentUser.name}
@@ -150,7 +153,7 @@ template(name='right_sidebar')
 
 
 template(name='left_sidebar')
-    .ui.left.sidebar.vertical.large.borderless.menu
+    .ui.left.sidebar.vertical.large.borderless.inverted.menu
         // a.item.toggle_sidebar(href="/" class="{{isActiveRoute '/'}}")
         //     img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
         //     |One
