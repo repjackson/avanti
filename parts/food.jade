@@ -5,119 +5,30 @@ template(name='food')
                 +icolorlg name='food' cl='ui inline image'
                 |food
         .sixteen.wide.column
-            .ui.cards
+            // .ui.header 
+            //     i.shop.icon
+            //     |vendors
+            .ui.stackable.six.cards
                 each shops
                     +shop_card
             .ui.header 
                 i.list.icon
-                |menu items
-            .ui.cards
+                |dishes
+            .ui.stackable.six.cards
                 each menu_items
                     +menu_item_card
-
-template(name='shop_card')
-    a.card(href="/shop/#{_id}/view")
-        .image
-            img.ui.raw.image(src="{{c.url image width=400 height=300 crop='fill'}}")    
+            a.ui.header(href="/m/drink")
+                i.list.icon
+                |drinks
+            .ui.stackable.six.cards
+                each drinks
+                    +drink_card
+                    
+                    
+template(name='drink_card')
+    a.ui.card(href="/drink/#{_id}/view")
+        img.ui.image(src="{{c.url image height=400 width=400 gravity='face' crop='fill'}}")
         .content
-            a.ui.header(href="/shop/#{_id}/view")
-                |#{title}
-            |!{description}
-        
-
-
-template(name='shop_view')
-    with current_doc
-        .ui.stackable.padded.grid
-            .centered.middle.aligned.row
-                .four.wide.center.aligned.column
-                    // if can_edit
-                    a(href="/m/shop" title='shops')
-                        +icolorlg name='food' cl='ui inline image pointer'
-                .eight.wide.center.aligned.column
-                    if icon
-                        +icolorlg name=icon cl='ui inline image'
-                    else
-                        +icolorlg name='food' cl='ui inline image'
-                    .ui.center.aligned.inline.header 
-                        small viewing shop
-                        |#{title}
-                .four.wide.center.aligned.column
-                    if can_edit
-                        a.edit_shop(href="/shop/#{_id}/edit")
-                            i.big.blue.pencil.icon
-            .row 
-                .four.wide.column
-                    .ui.header
-                        i.marker.icon 
-                        |#{location}
-                    .ui.header 
-                        small leader
-                    a.ui.header(href="/user/#{_author.username}") 
-                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                        |#{_author.username}
-                    +image_view key='image' label='image' direct=true
-                .eight.wide.column
-                    // +number_view key='bounty' label='bounty' direct=true
-                    +textarea_view key='description' label='description' direct=true
-                    div 
-                    +array_view key='tags' label='tags' direct=true
-                    .spacer
-                    .spacer
-                    .ui.icon.button.add_item 
-                        i.plus.icon
-                    .ui.stackable.three.cards
-                        each menu_items
-                            +menu_item_card
-                    +comments
-                    //- +array_view key='location_tags' label='location_tags' direct=true
-                .four.wide.column
-                    +boolean_view key='published' direct=true
-                    +boolean_view key='grubhub' direct=true
-                    +boolean_view key='postmates' direct=true
-                    +boolean_view key='nosh' direct=true
-                    +boolean_view key='DoorDash' direct=true
-
-
-
-
-
-template(name='shop_edit')
-    with current_doc
-        .ui.stackable.padded.grid
-            .centered.middle.aligned.row 
-                .four.wide.center.aligned.column
-                    a.ui.green.big.icon.button(href="/shop/#{_id}/view" title='save')
-                        i.checkmark.big.icon
-                .eight.wide.center.aligned.column
-                    .ui.inline.header 
-                        +icon name='shop'
-                        small edit shop
-                        |#{title}
-                .four.wide.center.aligned.column
-                    i.link.big.remove.icon.delete_item(title='delete shop')
-            .row 
-                .five.wide.column
-                    +text_edit key='title' icon='header' direct=true
-                    +image_edit key='image' label='image' direct=true
-                    +text_edit key='location' label='location' icon='marker' direct=true
-                    +icon_edit key='icon' label='icon' direct=true
-                    div 
-                    +array_edit key='tags' label='tags' direct=true
-                .six.wide.column
-                    +textarea_edit key='description' label='description' direct=true
-                    +textarea_edit key='hours' label='hours' direct=true
-                    //- +array_edit key='location_tags' label='location_tags' direct=true
-                .five.wide.column
-                    +boolean_edit key='published' direct=true
-                    +boolean_edit key='grubhub' direct=true
-                    +boolean_edit key='postmates' direct=true
-                    +boolean_edit key='nosh' direct=true
-                    +boolean_edit key='DoorDash' direct=true
-
-
-
-
-
-
-
+            .header #{title}
+            .header $#{price}
+                    

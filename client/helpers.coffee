@@ -8,6 +8,10 @@ Template.registerHelper 'in_role', (role)->
     else
         false
 
+Template.registerHelper 'dish_shop', () ->
+    Docs.findOne 
+        _id:@shop_id
+    
 Template.registerHelper 'current_tribe', () ->
     if Meteor.user()
         Docs.findOne 

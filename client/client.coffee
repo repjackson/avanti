@@ -13,6 +13,8 @@ Template.body.events
             .transition('fade out', 200)
             .transition('fade in', 200)
 
+Meteor.startup ->
+    Status.setTemplate('semantic_ui')
 
 Template.home.events
     'click .check_notifications': ->

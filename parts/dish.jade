@@ -52,23 +52,25 @@ template(name='menu_item_view')
                     .ui.header $#{price}
                     +voting_full
                     +single_doc_view key='shop_id' ref_model='shop' label='shop' direct=true        
+                    if vegan
+                        +icolorlg name='vegan-symbol' cl='ui inline image pointer' title='vegan'
+                    if vegetarian
+                        +icolorlg name='vegetarian-mark' cl='ui inline image pointer' title='vegetarian'
+ 
+
 
 template(name='menu_item_edit')
     with current_doc
         .ui.stackable.padded.grid
-            .centered.middle.aligned.row 
-                .four.wide.center.aligned.column
+            .row 
+                .five.wide.column
                     a.ui.green.big.icon.button(href="/menu_item/#{_id}/view" title='save')
                         i.checkmark.big.icon
-                .eight.wide.center.aligned.column
                     .ui.inline.header 
                         +icon name='meal'
                         small edit menu item
                         |#{title}
-                .four.wide.center.aligned.column
                     i.link.big.remove.icon.delete_item(title='delete menu item')
-            .row 
-                .five.wide.column
                     +text_edit key='title' icon='header' direct=true
                     +image_edit key='image' label='image' direct=true
                     +text_edit key='location' label='location' icon='marker' direct=true
@@ -82,4 +84,7 @@ template(name='menu_item_edit')
                 .five.wide.column
                     +number_edit key='price' direct=true
                     +boolean_edit key='published' direct=true
+                    +boolean_edit key='vegan' direct=true
+                    +boolean_edit key='vegetarian' direct=true
                     +single_doc_edit key='shop_id' ref_model='shop' label='shop' direct=true        
+                

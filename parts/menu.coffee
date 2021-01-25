@@ -1,31 +1,26 @@
 if Meteor.isClient
+    Router.route '/menu', -> @render 'menu'
+    
+    Template.menu.onCreated ->
+        @autorun -> Meteor.subscribe 'model_docs', 'drink_category'
+        @autorun -> Meteor.subscribe 'model_docs', 'drink'
 
-    Router.route '/menu_item/:doc_id/view', (->
-        @layout 'layout'
-        @render 'menu_item_view'
-        ), name:'menu_item_view'
-    Template.menu_item_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-   
-   
-    Router.route '/menu_item/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'menu_item_edit'
-        ), name:'menu_item_edit'
-
-    Template.menu_item_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-    Template.menu_item_edit.onRendered ->
+    Template.menu.onRendered ->
+        # Meteor.setTimeout ->
+        #     $('.accordion').accordion()
+        # , 1000
 
 
-    Template.menu_item_edit.events
-        'click .delete_item': ->
-            if confirm 'delete item?'
-                Docs.remove @_id
+    Template.menu.helpers
+        drink_categories: ->
+            Docs.find {
+                model:'drink_category'
+            }
 
-        'click .publish': ->
-            Docs.update Router.current().params.doc_id,
-                $set:published:true
-            if confirm 'confirm?'
-                Meteor.call 'publish_menu', @_id, =>
-                    Router.go "/menu/#{@_id}/view"
+    Template.drink_category_segment.helpers
+        category_drinks: ->
+            console.log @
+            Docs.find {
+                model:'drink'
+                category_ids:$in:[@_id]
+            }

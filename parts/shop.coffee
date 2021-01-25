@@ -21,6 +21,7 @@ if Meteor.isClient
             new_id = 
                 Docs.insert 
                     model:'menu_item'
+                    shop_id:Router.current().params.doc_id
             Router.go "/menu_item/#{new_id}/edit"        
 
         'click .delete_item': ->

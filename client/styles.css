@@ -524,6 +524,14 @@ body {
     -webkit-transform: translate(0, 1px) !important;
 } 
 
+a:active{
+    /* transition: all .25s !important; */
+    transform: scale(.96) !important;
+    transition: all 0s ease !important;
+
+    -webkit-transform: scale(.96) !important;
+} 
+
 
 .button, .selector, .card, .dark_mode, .ui.header, .ui.label, .item, p, img{
     animation: fadein .5s !important;
