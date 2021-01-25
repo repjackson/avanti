@@ -8,6 +8,7 @@ if Meteor.isClient
     Template.user_dashboard.onCreated ->
         @autorun -> Meteor.subscribe 'user_credits', Router.current().params.username
         @autorun -> Meteor.subscribe 'user_debits', Router.current().params.username
+        @autorun -> Meteor.subscribe 'user_checkins', Router.current().params.username
         @autorun -> Meteor.subscribe 'user_requests', Router.current().params.username
         @autorun -> Meteor.subscribe 'user_completed_requests', Router.current().params.username
         @autorun -> Meteor.subscribe 'user_event_tickets', Router.current().params.username
@@ -20,9 +21,20 @@ if Meteor.isClient
         'click .user_debit_segment': ->
             Router.go "/debit/#{@_id}/view"
             
+        'click .user_checkin_segment': ->
+            Router.go "/drink/#{@drink_id}/view"
+            
             
             
     Template.user_dashboard.helpers
+        user_checkins: ->
+            current_user = Meteor.users.findOne(username:Router.current().params.username)
+            Docs.find {
+                model:'drink_checkin'
+                _author_id: current_user._id
+            }, 
+                limit: 10
+                sort: _timestamp:-1
         user_debits: ->
             current_user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find {
@@ -73,6 +85,16 @@ if Meteor.isServer
         user = Meteor.users.findOne username:username
         Docs.find({
             model:'debit'
+            _author_id:user._id
+        },{
+            limit:20
+            sort: _timestamp:-1
+        })
+        
+    Meteor.publish 'user_checkins', (username)->
+        user = Meteor.users.findOne username:username
+        Docs.find({
+            model:'drink_checkin'
             _author_id:user._id
         },{
             limit:20

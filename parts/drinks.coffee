@@ -11,8 +11,8 @@ if Meteor.isClient
     
     Router.route "/drink/:doc_id/view", (->
         @layout 'layout'
-        @render 'drink_page'
-        ), name:'drinks'
+        @render 'drink_view'
+        ), name:'drink_view'
     Router.route "/drink/:doc_id/edit", (->
         @layout 'layout'
         @render 'drink_edit'
@@ -55,17 +55,38 @@ if Meteor.isClient
             Router.go "/drink/#{@_id}/view"
 
 
-    Template.drink_page.onCreated ->
+    Template.drink_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'model_docs', 'drink_checkin'
     Template.drink_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
 
-    Template.drink_page.helpers
+    Template.drink_view.helpers
+        checking_in: -> Session.get('checking_in')
         is_member: ->
             drink = Docs.findOne Router.current().params.doc_id
             if drink.members and Meteor.user().username in drink.members then true else false
+        checkins: ->
+            Docs.find 
+                model:'drink_checkin'
+                drink_id: Router.current().params.doc_id
 
-    Template.drink_page.events
+    Template.drink_view.events
+        'keyup .adding_checkin': (e,t)->
+            if e.which is 13
+                drink = Docs.findOne Router.current().params.doc_id
+                checkin = t.$('.adding_checkin').val()
+                Docs.insert
+                    drink_id: drink._id
+                    model:'drink_checkin'
+                    body:checkin
+                Session.set('checking_in', false)
+                t.$('.adding_checkin').val('')
+    
+        'click .checkin_drink': ->
+            Session.set('checking_in', true)
+        'click .cancel_checkin': ->
+            Session.set('checking_in', false)
         'click .join': ->
             Docs.update Router.current().params.doc_id,
                 $addToSet:

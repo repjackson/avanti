@@ -14,7 +14,7 @@ template(name='user_edit_layout')
                             .ui.small.inline.header @#{current_user.username}
                             img.ui.centered.medium.rounded.image(src="{{c.url profile_image_id height=400 width=400 gravity='face' crop='fill'}}")
                                 
-                            a.ui.big.green.circular.icon.button(href="/user/#{current_user.username}/") 
+                            a.ui.big.green.circular.button(href="/user/#{current_user.username}/") 
                                 i.checkmark.big.icon
                                 strong save
                             a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/account" class="{{isActiveRoute 'user_edit_account'}}" title='account') 

@@ -3,29 +3,16 @@ template(name='user_dashboard')
     // .ui.hidden.divider
     .ui.stackable.grid
         .row
-            .sixteen.wide.column
-                .ui.inline.header() #{points}pts
-                .ui.big.basic.circular.label() {{to_percent one_ratio}}% one ratio
-                .ui.large.basic.circular.label() #{flow_volume} volume
-                //- .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
-                //-     i.refresh.icon
-                if is_current_user
-                    +boolean_edit key='online' label='online' direct=true
-                    +text_edit key='current_status' label='status' icon='clock' direct=true
-                else 
-                    if online 
-                        .ui.green.large.label 
-                            i.large.checkmark.icon
-                            |online
-                    else
-                        .ui.disabled.large.label 
-                            |offline
-                    if current_status
-                        .ui.small.header(title='status' )
-                            i.grey.clock.icon
-                            |!{current_status}
-                if is_dev
-                    .ui.small.inline.header #{_id}
+            .column
+                a.ui.inline.header(href="/user/#{username}/credits")
+                    i.checkmark.large.icon
+                    |#{total_credit_amount}p
+                    |checkins
+                    small(title='received count') (#{credit_count}x) 
+                    small(title='rank') ##{global_credit_count_rank}
+                .medscroll.ui.segments
+                    each user_checkins
+                        +user_checkin_segment
         .four.column.row
             .column
                 a.ui.inline.header(href="/user/#{username}/credits")
@@ -41,40 +28,40 @@ template(name='user_dashboard')
                 .medscroll.ui.segments
                     each user_credits
                         +user_credit_segment
-            .column
-                a.ui.inline.spaced.header(href="/user/#{username}/debits")
-                    i.chevron.up.icon
-                    |#{total_debit_amount}p
-                    // |sent
-                    small(title='debit count') (#{debit_count}x)
-                    small(title='rank') ##{global_debit_count_rank}
-                i.tags.icon(title='credit tags')
-                each debit_tags
-                    .ui.small.basic.circular.label #{title} 
-                        // small #{count}
+            // .column
+            //     a.ui.inline.spaced.header(href="/user/#{username}/debits")
+            //         i.chevron.up.icon
+            //         |#{total_debit_amount}p
+            //         // |sent
+            //         small(title='debit count') (#{debit_count}x)
+            //         small(title='rank') ##{global_debit_count_rank}
+            //     i.tags.icon(title='credit tags')
+            //     each debit_tags
+            //         .ui.small.basic.circular.label #{title} 
+            //             // small #{count}
     
-                div
-                .medscroll.ui.segments
-                    each user_debits
-                        +user_debit_segment
-            .column
-                a.ui.inline.spaced.header(href="/user/#{username}/requests")
-                    i.concierge.bell.icon
-                    |requests
-                .ui.small.header (#{total_fulfilled_amount}p total fulfilled)
-                .ui.small.header (#{fulfilled_count}p total fulfilled count)
-                .medscroll
-                    each user_requests
-                        .ui.card
-                            if image_id
-                                img.ui.image(src="{{c.url image_id height=100 width=200}}" class=currentUser.invert_class)
-                            .content.zoom.pointer
-                                a.header(href="/request/#{_id}/view")
-                                    |#{point_bounty}pts: #{title}
-                                // |!{description}
-                                |status: #{status}
-                                if complete 
-                                    |completed by #{completer.name}
+            //     div
+            //     .medscroll.ui.segments
+            //         each user_debits
+            //             +user_debit_segment
+            // .column
+            //     a.ui.inline.spaced.header(href="/user/#{username}/requests")
+            //         i.concierge.bell.icon
+            //         |requests
+            //     .ui.small.header (#{total_fulfilled_amount}p total fulfilled)
+            //     .ui.small.header (#{fulfilled_count}p total fulfilled count)
+            //     .medscroll
+            //         each user_requests
+            //             .ui.card
+            //                 if image_id
+            //                     img.ui.image(src="{{c.url image_id height=100 width=200}}" class=currentUser.invert_class)
+            //                 .content.zoom.pointer
+            //                     a.header(href="/request/#{_id}/view")
+            //                         |#{point_bounty}pts: #{title}
+            //                     // |!{description}
+            //                     |status: #{status}
+            //                     if complete 
+            //                         |completed by #{completer.name}
             .column
                 a.ui.inline.spaced.header(href="/user/#{username}/events")
                     i.calendar.icon
@@ -94,6 +81,13 @@ template(name='user_dashboard')
                                 |{{long_time time}}
 
 
+
+template(name='user_checkin_segment')
+    .ui.segment.user_checkin_segment.pointer.zoom
+        |#{body}
+        small #{when}
+        each tags
+            .ui.mini.basic.label #{this}
 
 template(name='user_credit_segment')
     .ui.segment.user_credit_segment.pointer.zoom

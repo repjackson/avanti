@@ -71,7 +71,7 @@ template(name='drink_card_template')
             .ui.fluid.green.button.order_now
                 |order now        
                 
-template(name='drink_page')
+template(name='drink_view')
     with current_doc
         .ui.padded.stackable.grid.header-wrapper
             .row
@@ -88,6 +88,24 @@ template(name='drink_page')
                     div
                     +comments
                 .ten.wide.column
+                    .ui.segment
+                        .ui.inline.header 
+                            +i name='event-accepted'
+                            |checkins
+                        unless checking_in
+                            .ui.icon.large.basic.circular.button.checkin_drink(title='checkin drink')
+                                i.plus.icon
+                        if checking_in
+                            .ui.fluid.action.input
+                                input.adding_checkin(type='text' placeholder='details')
+                                .ui.icon.green.button
+                                    i.send.icon
+                            .ui.icon.large.basic.icon.button.cancel_checkin
+                                i.cancel.icon
+                        .ui.list
+                            each checkins
+                                .item #{body} #{when}
+                                    +author_info
                     +beer_info
                     +beer_company
                     .ui.segment
