@@ -1,4 +1,9 @@
 if Meteor.isClient
+    Router.route "/staff", (->
+        @layout 'layout'
+        @render 'staff'
+        ), name:'staff'
+    
     Template.staff_tasks.onCreated ->
         @autorun => Meteor.subscribe 'staff_tasks'
     Template.staff_tasks.helpers
