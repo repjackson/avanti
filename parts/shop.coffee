@@ -16,6 +16,7 @@ if Meteor.isClient
         dishes: ->
             Docs.find
                 model:'dish'
+                shop_id:Router.current().params.doc_id
     Template.shop_view.events
         'click .add_item': ->
             new_id = 

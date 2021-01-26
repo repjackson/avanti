@@ -2,14 +2,20 @@ template(name='dish_card')
     a.ui.card(href="/dish/#{_id}/view")
         img.ui.image(src="{{c.url image height=400 width=400 gravity='face' crop='fill'}}")
         .content
-            .header #{title}
-            .header $#{price}
-
+            .header #{title} $#{price}
+            each tags
+                .ui.small.label #{this}
+            each ingredient_tags
+                .ui.small.label #{this}
+            |#{points}
+                
+            
+            
 template(name='dish_view')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .four.wide.column
+                .eight.wide.column
                     .ui.segment
                         with dish_shop
                             a.ui.header(href="/shop/#{_id}/view")
@@ -22,18 +28,6 @@ template(name='dish_view')
                     if can_edit
                         a.edit_dish(href="/dish/#{_id}/edit")
                             i.big.blue.pencil.circular.link.icon
-                    +image_view key='image' label='image' direct=true
-                .eight.wide.column
-                    // +number_view key='bounty' label='bounty' direct=true
-                    .f11 #{description}
-                    div 
-                    
-                    +array_view key='tags' label='tags' icon='tags' direct=true
-                    each dishes
-                        a.ui.header(href="/menu/#{_id}/view") #{title}
-                    +comments
-                    //- +array_view key='location_tags' label='location_tags' direct=true
-                .four.wide.column
                     .ui.header $#{price}
                     if in_dev
                         +print_this
@@ -43,6 +37,14 @@ template(name='dish_view')
                         +icolorlg name='vegan-symbol' cl='ui inline image pointer' title='vegan'
                     if vegetarian
                         +icolorlg name='vegetarian-mark' cl='ui inline image pointer' title='vegetarian'
+                    +array_view key='tags' label='tags' icon='tags' direct=true
+                    +array_view key='ingredient_tags' label='ingredients' icon='food' direct=true
+                    each dishes
+                        a.ui.header(href="/menu/#{_id}/view") #{title}
+                    +comments
+                    .f11 #{description}
+                .eight.wide.column
+                    +image_view key='image' label='image' direct=true
  
 
 
@@ -72,5 +74,5 @@ template(name='dish_edit')
                     +boolean_edit key='published' direct=true
                     +boolean_edit key='vegan' direct=true
                     +boolean_edit key='vegetarian' direct=true
-                    +single_doc_edit key='shop_id' ref_model='shop' label='shop' direct=true        
+                    // +single_doc_edit key='shop_id' ref_model='shop' label='shop' direct=true        
                 

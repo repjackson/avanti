@@ -6,7 +6,9 @@ template(name='shop_card')
         .content
             a.ui.header(href="/shop/#{_id}/view")
                 |#{title}
-            |!{description}
+            each tags
+                .ui.label #{this}
+            // |!{description}
         
 
 
@@ -19,12 +21,7 @@ template(name='shop_view')
                     a(href="/m/shop" title='shops')
                         +i name='food' cl='ui inline image pointer'
                 .eight.wide.center.aligned.column
-                    // if icon
-                    //     +icolorlg name=icon cl='ui inline image'
-                    // else
-                    //     +icolorlg name='food' cl='ui inline image'
                     .ui.center.aligned.inline.header 
-                        // small viewing shop
                         img.ui.avatar.image(src="{{c.url image width=400 height=400 crop='fill'}}")
                         |#{title}
                 .four.wide.center.aligned.column
@@ -64,7 +61,7 @@ template(name='shop_view')
                         |fans
                     each fans
                         .ui.header #{username}
-                        
+                    +voting_full
 
 
 
@@ -85,8 +82,8 @@ template(name='shop_edit')
                     +text_edit key='title' icon='header' direct=true
                     +text_edit key='slug' icon='slug' direct=true
                     +image_edit key='image' label='image' direct=true
-                    +text_edit key='location' label='location' icon='marker' direct=true
-                    +icon_edit key='icon' label='icon' direct=true
+                    // +text_edit key='location' label='location' icon='marker' direct=true
+                    // +icon_edit key='icon' label='icon' direct=true
                     div 
                     +array_edit key='tags' label='tags' direct=true
                 .six.wide.column
@@ -95,13 +92,12 @@ template(name='shop_edit')
                     //- +array_edit key='location_tags' label='location_tags' direct=true
                 .five.wide.column
                     +boolean_edit key='published' direct=true
-                    +boolean_edit key='grubhub' direct=true
-                    +boolean_edit key='postmates' direct=true
-                    +boolean_edit key='nosh' direct=true
+                    +boolean_edit key='Grubhub' direct=true
+                    +boolean_edit key='Postmates' direct=true
+                    +boolean_edit key='Nosh' direct=true
                     +boolean_edit key='Toast' direct=true
                     +boolean_edit key='DoorDash' direct=true
-
-
+    
 
 
 

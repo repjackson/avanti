@@ -1,5 +1,4 @@
 if Meteor.isClient
-
     Router.route '/dish/:doc_id/view', (->
         @layout 'layout'
         @render 'dish_view'
