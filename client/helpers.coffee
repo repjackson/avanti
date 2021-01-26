@@ -12,6 +12,11 @@ Template.registerHelper 'dish_shop', () ->
     Docs.findOne 
         _id:@shop_id
     
+Template.registerHelper 'drink_ref', () ->
+    Docs.findOne 
+        model:'drink'
+        _id:@drink_id
+    
 Template.registerHelper 'current_tribe', () ->
     if Meteor.user()
         Docs.findOne 

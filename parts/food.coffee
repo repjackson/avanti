@@ -7,7 +7,7 @@ if Meteor.isClient
         ), name:'food'
     Template.food.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'shop'
-        @autorun => Meteor.subscribe 'model_docs', 'menu_item'
+        @autorun => Meteor.subscribe 'model_docs', 'dish'
         @autorun => Meteor.subscribe 'model_docs', 'drink'
    
     Template.food.onRendered ->
@@ -18,6 +18,6 @@ if Meteor.isClient
         shops: ->
             Docs.find
                 model:'shop'
-        menu_items: ->
+        dishes: ->
             Docs.find
-                model:'menu_item'
+                model:'dish'

@@ -17,14 +17,15 @@ template(name='shop_view')
                 .four.wide.center.aligned.column
                     // if can_edit
                     a(href="/m/shop" title='shops')
-                        +icolorlg name='food' cl='ui inline image pointer'
+                        +i name='food' cl='ui inline image pointer'
                 .eight.wide.center.aligned.column
-                    if icon
-                        +icolorlg name=icon cl='ui inline image'
-                    else
-                        +icolorlg name='food' cl='ui inline image'
+                    // if icon
+                    //     +icolorlg name=icon cl='ui inline image'
+                    // else
+                    //     +icolorlg name='food' cl='ui inline image'
                     .ui.center.aligned.inline.header 
-                        small viewing shop
+                        // small viewing shop
+                        img.ui.avatar.image(src="{{c.url image width=400 height=400 crop='fill'}}")
                         |#{title}
                 .four.wide.center.aligned.column
                     if can_edit
@@ -32,27 +33,20 @@ template(name='shop_view')
                             i.big.blue.pencil.icon
             .row 
                 .four.wide.column
-                    .ui.header
-                        i.marker.icon 
-                        |#{location}
-                    .ui.header 
-                        small leader
-                    a.ui.header(href="/user/#{_author.username}") 
-                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                        |#{_author.username}
                     +image_view key='image' label='image' direct=true
                 .eight.wide.column
                     // +number_view key='bounty' label='bounty' direct=true
-                    +textarea_view key='description' label='description' direct=true
+                    .f11 #{description}
                     div 
                     +array_view key='tags' label='tags' direct=true
-                    .spacer
-                    .spacer
+                    .ui.inline.header 
+                        |#{dishes.count}
+                        |dishes
                     .ui.icon.button.add_item 
                         i.plus.icon
                     .ui.stackable.three.cards
-                        each menu_items
-                            +menu_item_card
+                        each dishes
+                            +dish_card
                     +comments
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .four.wide.column
@@ -61,6 +55,16 @@ template(name='shop_view')
                     +boolean_view key='postmates' direct=true
                     +boolean_view key='nosh' direct=true
                     +boolean_view key='DoorDash' direct=true
+                    .ui.header 
+                        |most popular
+                    .ui.header 
+                        |orders
+                    .ui.header 
+                        |#{fans.count}
+                        |fans
+                    each fans
+                        .ui.header #{username}
+                        
 
 
 

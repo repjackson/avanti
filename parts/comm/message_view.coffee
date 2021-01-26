@@ -18,9 +18,3 @@ if Meteor.isClient
     Template.message_view.onRendered ->
 
 
-
-if Meteor.isServer
-    Meteor.publish 'product_from_message_id', (message_id)->
-        message = Docs.findOne message_id
-        Docs.find 
-            _id:message.product_id

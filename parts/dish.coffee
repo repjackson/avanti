@@ -1,24 +1,25 @@
 if Meteor.isClient
 
-    Router.route '/menu_item/:doc_id/view', (->
+    Router.route '/dish/:doc_id/view', (->
         @layout 'layout'
-        @render 'menu_item_view'
-        ), name:'menu_item_view'
-    Template.menu_item_view.onCreated ->
+        @render 'dish_view'
+        ), name:'dish_view'
+    Template.dish_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'shop_from_dish_id', Router.current().params.doc_id
    
    
-    Router.route '/menu_item/:doc_id/edit', (->
+    Router.route '/dish/:doc_id/edit', (->
         @layout 'layout'
-        @render 'menu_item_edit'
-        ), name:'menu_item_edit'
+        @render 'dish_edit'
+        ), name:'dish_edit'
 
-    Template.menu_item_edit.onCreated ->
+    Template.dish_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-    Template.menu_item_edit.onRendered ->
+    Template.dish_edit.onRendered ->
 
 
-    Template.menu_item_edit.events
+    Template.dish_edit.events
         'click .delete_item': ->
             if confirm 'delete item?'
                 Docs.remove @_id
@@ -29,3 +30,12 @@ if Meteor.isClient
             if confirm 'confirm?'
                 Meteor.call 'publish_menu', @_id, =>
                     Router.go "/menu/#{@_id}/view"
+
+
+if Meteor.isServer
+    Meteor.publish 'shop_from_dish_id', (dish_id)->
+        dish = Docs.findOne dish_id
+        console.log 'dish', dish
+        Docs.find
+            # model:'shop'
+            _id:dish.shop_id

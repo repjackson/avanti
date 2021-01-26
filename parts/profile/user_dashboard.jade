@@ -1,19 +1,17 @@
 template(name='user_dashboard')
-    // +user_about
-    // .ui.hidden.divider
     .ui.stackable.grid
         .row
             .column
                 a.ui.inline.header(href="/user/#{username}/credits")
                     i.checkmark.large.icon
-                    |#{total_credit_amount}p
+                    |#{user_checkins.count}
                     |checkins
                     small(title='received count') (#{credit_count}x) 
                     small(title='rank') ##{global_credit_count_rank}
                 .medscroll.ui.segments
                     each user_checkins
                         +user_checkin_segment
-        .four.column.row
+        .two.column.row
             .column
                 a.ui.inline.header(href="/user/#{username}/credits")
                     i.chevron.down.large.icon
@@ -84,6 +82,9 @@ template(name='user_dashboard')
 
 template(name='user_checkin_segment')
     .ui.segment.user_checkin_segment.pointer.zoom
+        with drink_ref
+            img.ui.avatar.image(src="{{c.url image_id width=400 height=400 crop='fill'}}")
+            |#{title}
         |#{body}
         small #{when}
         each tags

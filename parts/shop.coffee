@@ -13,16 +13,16 @@ if Meteor.isClient
         shops: ->
             Docs.find
                 model:'shop'
-        menu_items: ->
+        dishes: ->
             Docs.find
-                model:'menu_item'
+                model:'dish'
     Template.shop_view.events
         'click .add_item': ->
             new_id = 
                 Docs.insert 
-                    model:'menu_item'
+                    model:'dish'
                     shop_id:Router.current().params.doc_id
-            Router.go "/menu_item/#{new_id}/edit"        
+            Router.go "/dish/#{new_id}/edit"        
 
         'click .delete_item': ->
             if confirm 'delete item?'
@@ -35,7 +35,7 @@ if Meteor.isClient
 
     Template.shop_view.onRendered ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'model_docs', 'menu_item'
+        @autorun => Meteor.subscribe 'model_docs', 'dish'
 
 
     Template.shop_view.events

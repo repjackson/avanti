@@ -57,8 +57,8 @@ template(name='nav')
                 else 
                     i.large.user.large.icon
                 strong.mobile.hidden #{currentUser.name}
-            a.mobile.hidden.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_credits'}}")
-                |#{currentUser.points}p
+            // a.mobile.hidden.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_credits'}}")
+            //     |#{currentUser.points}p
             a.icon.large.item.toggle_rightbar.select_term
                 i.ellipsis.vertical.large.icon
             // else

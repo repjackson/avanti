@@ -25,14 +25,14 @@ template(name='profile_layout')
                                 |account
                         if is_current_user
                             a.ui.circular.basic.button(href="/user/#{username}/edit" title='edit your account')
-                                i.cog.big.icon
+                                i.cog.icon
                                 |account
                             a.ui.circular.basic.button.logout(href="#" title='log out')
-                                i.sign.out.big.icon
+                                i.sign.out.icon
                                 |log out
                         // .ui.inline.header() #{points}pts
-                        .ui.big.basic.circular.label() {{to_percent one_ratio}}% one ratio
-                        .ui.large.basic.circular.label() #{flow_volume} volume
+                        .ui.basic.circular.label {{to_percent one_ratio}}% one ratio
+                        .ui.large.basic.circular.label #{flow_volume} volume
                         //- .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
                         //-     i.refresh.icon
                         if is_current_user
